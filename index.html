@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TakaPay Lending Intelligence</title>
+<meta name="description" content="Digital lending and credit risk intelligence dashboard for TakaPay: portfolio growth, credit quality, geography, customers, collections, vintages, profitability and predictive risk.">
+<link rel="icon" href="assets/mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600&text=%E0%A7%B3&display=swap">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/story.css">
+<script>try { const t = localStorage.getItem('tp-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+</head>
+<body>
+<div id="dash-root">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 9.5v5M18 9.5v5"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12.5h18"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7h14a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H6a2 2 0 0 1-2-2V7zM4 7l11-3.5V7"/><circle cx="16.5" cy="13.5" r="1.2"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.3c2.1.7 3.5 2.8 3.5 5.7"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 2.5h8.5L19 7v14.5H6z"/><path d="M14 2.5V7.5h5M9 12.5h7M9 16.5h5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 2.5 20h19z"/><path d="M12 10v4.5M12 17.2v.3"/></symbol>
+    <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M3.5 18a8.5 8.5 0 1 1 17 0"/><path d="M12 18l4.2-5.6M7 18h.01M17 18h.01"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16.2 9.5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.6-3.4 8-8 9-4.6-1-8-4.4-8-9V6z"/><path d="M12 8v5M12 15.8v.3"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 11 12 4l8.5 7v9h-17z"/><path d="M9.5 20v-5.5h5V20"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4 3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+    <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="4"/><path d="M4 21c0-4.4 3.6-7.5 8-7.5s8 3.1 8 7.5"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7.5 12 3.5l9 4-9 4z"/><path d="M3 7.5v9.5l9 4 9-4V7.5M12 11.5V21"/></symbol>
+    <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M17 2.5l3.5 3.5L17 9.5"/><path d="M3.5 11V9.5a3.5 3.5 0 0 1 3.5-3.5h13.5M7 21.5 3.5 18 7 14.5"/><path d="M20.5 13v1.5a3.5 3.5 0 0 1-3.5 3.5H3.5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/><path d="M19 3v3M17.5 4.5h3"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3 21 8l-9 5-9-5z"/><path d="M3 12.5l9 5 9-5M3 17l9 5 9-5"/></symbol>
+    <symbol id="i-coins" viewBox="0 0 24 24"><circle cx="9" cy="9" r="6"/><path d="M15.5 9.3a6 6 0 1 1-6.2 6.2"/><path d="M9 6.5v5M7.2 8h3"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M3.5 5.5C5.5 4.5 8.5 4.3 12 6c3.5-1.7 6.5-1.5 8.5-.5V19c-2-1-5-1.2-8.5.5C8.5 17.8 5.5 18 3.5 19z"/><path d="M12 6v13.5"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M4 16.5 10 10.5l4 4 6-6.5"/><path d="M15 8h5v5"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M4 7.5 10 13.5l4-4 6 6.5"/><path d="M15 16h5v-5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4v5h5"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V3.5h12l-2.5 4.5L17 12.5H5"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-funnel" viewBox="0 0 24 24"><path d="M3.5 4.5h17l-6.5 8v7l-4-2v-5z"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5 4.5 13.5H12l-1 8 8.5-11H12z"/></symbol>
+    <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3.5v17M5 20.5h14M4 7.5h16M7 7.5l-3 7h6zM17 7.5l-3 7h6z"/></symbol>
+  </defs>
+</svg>
+
+<div class="tp" id="top">
+  <header class="tp-head">
+    <div class="tp-brand">
+      <span class="tp-mark" role="img" aria-label="TakaPay logo"></span>
+      <div>
+        <p class="tp-word"><span class="tp-w1">Taka</span><span class="tp-w2">Pay</span></p>
+        <h1 class="tp-title">Digital lending &amp; credit risk intelligence</h1>
+        <p class="tp-sub">Executive portfolio monitoring · Customer intelligence · Predictive risk analytics</p>
+      </div>
+    </div>
+    <div class="tp-meta">
+      <p class="tp-meta-l"><svg class="tp-i"><use href="#i-calendar"/></svg>Reporting period Jan 2021 – Oct 2026</p>
+      <p class="tp-meta-l"><svg class="tp-i"><use href="#i-clock"/></svg>Data as of 31 Oct 2026 · repayments settled to 31 Jul 2026</p>
+      <div class="tp-filters">
+        <label class="tp-f"><svg class="tp-i"><use href="#i-pin"/></svg><span class="tp-sr">Division</span>
+          <select data-draw="divsel" data-source="geo_m" aria-label="Division"></select></label>
+        <span class="tp-chip" data-draw="chip" data-source="geo_m">—</span>
+        <button class="tp-btn tp-reset" type="button"><svg class="tp-i"><use href="#i-reset"/></svg>Reset filters</button>
+        <button class="tp-btn tp-theme" type="button" aria-label="Switch light or dark theme"><svg class="tp-i"><use href="#i-spark"/></svg>Theme</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tp-tabs" role="tablist" aria-label="Pages">
+    <button class="tp-tab" role="tab" data-tab="story"><svg class="tp-i"><use href="#i-bolt"/></svg>Story</button>
+    <button class="tp-tab" role="tab" data-tab="overview"><svg class="tp-i"><use href="#i-home"/></svg>Overview</button>
+    <button class="tp-tab" role="tab" data-tab="geography"><svg class="tp-i"><use href="#i-map"/></svg>Geography</button>
+    <button class="tp-tab" role="tab" data-tab="customers"><svg class="tp-i"><use href="#i-users"/></svg>Customers</button>
+    <button class="tp-tab" role="tab" data-tab="products"><svg class="tp-i"><use href="#i-box"/></svg>Products &amp; origination</button>
+    <button class="tp-tab" role="tab" data-tab="collections"><svg class="tp-i"><use href="#i-repeat"/></svg>Repayment &amp; collections</button>
+    <button class="tp-tab" role="tab" data-tab="predictive"><svg class="tp-i"><use href="#i-spark"/></svg>Predictive risk</button>
+    <button class="tp-tab" role="tab" data-tab="vintage"><svg class="tp-i"><use href="#i-layers"/></svg>Vintages</button>
+    <button class="tp-tab" role="tab" data-tab="profitability"><svg class="tp-i"><use href="#i-coins"/></svg>Profitability</button>
+    <button class="tp-tab" role="tab" data-tab="actions"><svg class="tp-i"><use href="#i-compass"/></svg>Action centre</button>
+    <button class="tp-tab" role="tab" data-tab="method"><svg class="tp-i"><use href="#i-book"/></svg>Methodology</button>
+  </nav>
+
+  <!-- ===================== 0. STORY ===================== -->
+  <section class="tp-page" id="story" role="tabpanel">
+    <div class="st-hero">
+      <p class="st-kicker"><svg class="tp-i"><use href="#i-bolt"/></svg>The portfolio story · <span data-draw="chip2">—</span></p>
+      <h2 class="st-h">Lending grew <b data-draw="v" data-src="story" data-f="multiple" data-w="division={div}" data-fmt="x">—</b> since 2021. Quality held, but the book is young — and young books hide risk.</h2>
+      <p class="st-lede">TakaPay disbursed <b data-draw="v" data-src="story" data-f="disb_first" data-w="division={div}" data-fmt="bdt">—</b> in 2021 and <b data-draw="v" data-src="story" data-f="disb_last" data-w="division={div}" data-fmt="bdt">—</b> in the first ten months of 2026. This page walks through what happened, why, what is likely next and what management should do. Each chapter links to the analysis behind it.</p>
+      <div class="st-stats">
+        <div><span class="st-n" data-draw="v" data-src="story" data-f="disb_total" data-w="division={div}" data-fmt="bdt">—</span><span class="st-l">disbursed 2021–2026</span></div>
+        <div><span class="st-n" data-draw="v" data-src="story" data-f="loans_total" data-w="division={div}" data-fmt="cnum">—</span><span class="st-l">loans made</span></div>
+        <div><span class="st-n" data-draw="v" data-src="kpi" data-f="glp" data-w="division={div}" data-fmt="bdt">—</span><span class="st-l">outstanding today</span></div>
+        <div><span class="st-n" data-draw="v" data-src="kpi" data-f="borrowers" data-w="division={div}" data-fmt="cnum">—</span><span class="st-l">active borrowers</span></div>
+      </div>
+      <nav class="st-toc" aria-label="Chapters">
+        <a href="#ch-growth">1 · Growth</a><a href="#ch-quality">2 · Quality</a><a href="#ch-where">3 · Where</a><a href="#ch-who">4 · Who</a><a href="#ch-repay">5 · Repayment</a><a href="#ch-next">6 · What’s next</a><a href="#ch-act">7 · What to do</a>
+      </nav>
+    </div>
+
+    <article class="st-ch" id="ch-growth">
+      <div class="st-text">
+        <p class="st-num">01 · What happened</p>
+        <h3>The book has never been bigger</h3>
+        <p>Disbursement rose every year, and Jan–Oct 2026 is already <b data-draw="v" data-src="kpi" data-f="disb_yoy" data-w="division={div}" data-fmt="chg">—</b> on the same months of 2025. The outstanding portfolio stands at <b data-draw="v" data-src="kpi" data-f="glp" data-w="division={div}" data-fmt="bdt">—</b>, up <b data-draw="v" data-src="kpi" data-f="glp_yoy" data-w="division={div}" data-fmt="chg">—</b> in a year.</p>
+        <p class="st-so">So what: growth this fast changes the denominator of every risk ratio. Read the next chapter with that in mind.</p>
+        <button class="tp-btn st-go" type="button" data-goto="overview"><svg class="tp-i"><use href="#i-home"/></svg>Explore the overview</button>
+      </div>
+      <div class="st-fig"><p class="st-cap">Annual disbursement, growth on the year before</p><div class="tp-chart" data-draw="c_annual" data-source="mon_m"></div></div>
+    </article>
+
+    <article class="st-ch" id="ch-quality">
+      <div class="st-text">
+        <p class="st-num">02 · Why it looks better than it is</p>
+        <h3>Risk ratios fell — mostly because the book is new</h3>
+        <p>PAR 30 is <b data-draw="v" data-src="kpi" data-f="par30_r" data-w="division={div}" data-fmt="pct2">—</b> against <b data-draw="v" data-src="kpi" data-f="par30_r_prev" data-w="division={div}" data-fmt="pct2">—</b> a year ago, and the NPL ratio is <b data-draw="v" data-src="kpi" data-f="npl_r" data-w="division={div}" data-fmt="pct2">—</b>. But most of today’s loans were made in the last few months and have not yet had time to go bad.</p>
+        <p>Comparing loans at the same age tells the real story: loans made in 2024 reached <b data-draw="v" data-src="story" data-f="mob6_prev" data-w="division={div}" data-fmt="pct">—</b> default by month 6, against <b data-draw="v" data-src="story" data-f="mob6_last" data-w="division={div}" data-fmt="pct">—</b> for 2025 loans.</p>
+        <p class="st-so">So what: judge new lending by vintage, not by the headline PAR, until the 2026 cohorts mature.</p>
+        <button class="tp-btn st-go" type="button" data-goto="vintage"><svg class="tp-i"><use href="#i-layers"/></svg>Explore vintages</button>
+      </div>
+      <div class="st-fig"><p class="st-cap">PAR 1, 7, 30 and NPL ratio, month-end</p>
+        <div class="tp-legend"><span><i style="background:#7FB7BF"></i>PAR 1</span><span><i style="background:#137C8B"></i>PAR 7</span><span><i style="background:#E3A008"></i>PAR 30</span><span><i style="background:#D64545"></i>NPL</span></div>
+        <div class="tp-chart" data-draw="c_quality" data-source="mon_m"></div></div>
+    </article>
+
+    <article class="st-ch" id="ch-where">
+      <div class="st-text">
+        <p class="st-num">03 · Where</p>
+        <h3>Exposure is concentrated, risk is uneven</h3>
+        <p><b data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=top_geo" data-fmt="text">—</b> holds <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=top_geo" data-fmt="pct">—</b> of the outstanding book. The highest NPL ratio is in <b data-draw="v" data-src="story" data-f="worst_geo" data-w="division={div}" data-fmt="text">—</b> at <b data-draw="v" data-src="story" data-f="worst_geo_npl" data-w="division={div}" data-fmt="pct2">—</b>, against <b data-draw="v" data-src="geo_m" data-f="npl_r" data-w="id={gid}" data-fmt="pct2">—</b> for the selection.</p>
+        <p class="st-so">So what: expansion should follow the high-growth, low-risk districts — and only where collection capacity keeps up. Click a division on the map to follow it through every chapter.</p>
+        <button class="tp-btn st-go" type="button" data-goto="geography"><svg class="tp-i"><use href="#i-map"/></svg>Explore geography</button>
+      </div>
+      <div class="st-fig"><p class="st-cap">Outstanding portfolio by division</p><div class="tp-chart tp-map" data-draw="c_map" data-source="geo_m bd_map"></div></div>
+    </article>
+
+    <article class="st-ch" id="ch-who">
+      <div class="st-text">
+        <p class="st-num">04 · Who</p>
+        <h3>Occupation predicts repayment better than labels do</h3>
+        <p><b data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=occ_best" data-fmt="text">—</b> default least, at <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=occ_best" data-fmt="pct">—</b> within 12 months; <b data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=occ_def" data-fmt="text">—</b> default most, at <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=occ_def" data-fmt="pct">—</b>. Repeat borrowers default at <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=repeat_def" data-fmt="pct">—</b> versus <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=new_def" data-fmt="pct">—</b> for first loans.</p>
+        <p class="st-so">So what: keep first loans small and let limits grow with on-time cycles, rather than excluding whole occupations.</p>
+        <button class="tp-btn st-go" type="button" data-goto="customers"><svg class="tp-i"><use href="#i-users"/></svg>Explore customers</button>
+      </div>
+      <div class="st-fig"><p class="st-cap">Average loan size against NPL ratio, by occupation</p><div class="tp-chart tp-tall" data-draw="c_occ" data-source="seg_m"></div></div>
+    </article>
+
+    <article class="st-ch" id="ch-repay">
+      <div class="st-text">
+        <p class="st-num">05 · Repayment</p>
+        <h3>Collections are steady; the early buckets decide losses</h3>
+        <p>Over the 12 settled months to July 2026, borrowers paid <b data-draw="v" data-src="kpi" data-f="ce" data-w="division={div}" data-fmt="pct">—</b> of what was due, and <b data-draw="v" data-src="kpi" data-f="ontime_r" data-w="division={div}" data-fmt="pct">—</b> of instalments arrived on time. Each month <b data-draw="v" data-src="roll_sum" data-f="cure_r" data-w="division={div}" data-fmt="pct">—</b> of delinquent principal cures while <b data-draw="v" data-src="roll_sum" data-f="forward_r" data-w="division={div}" data-fmt="pct">—</b> rolls deeper.</p>
+        <p class="st-so">So what: the cheapest recoveries are in the first 30 days — that is where collection effort should be concentrated.</p>
+        <button class="tp-btn st-go" type="button" data-goto="collections"><svg class="tp-i"><use href="#i-repeat"/></svg>Explore collections</button>
+      </div>
+      <div class="st-fig"><p class="st-cap">Collection efficiency and on-time rate by month</p>
+        <div class="tp-legend"><span><i style="background:#137C8B"></i>Collection efficiency</span><span><i style="background:#E3A008"></i>On-time rate</span></div>
+        <div class="tp-chart" data-draw="c_ce" data-source="mon_m"></div></div>
+    </article>
+
+    <article class="st-ch" id="ch-next">
+      <div class="st-text">
+        <p class="st-num">06 · What is likely next</p>
+        <h3>The models point to where the next losses sit</h3>
+        <p>A probability-of-default model puts <b data-draw="v" data-src="risk_m" data-f="high_exposure" data-w="id={rk}|All" data-fmt="bdt">—</b> (<b data-draw="v" data-src="risk_m" data-f="high_share" data-w="id={rk}|All" data-fmt="pct">—</b> of outstanding) in the high and very-high risk segments. The early-warning model flags <b data-draw="v" data-src="risk_m" data-f="ews_loans" data-w="id={rk}|All" data-fmt="num">—</b> performing loans likely to fall behind within 30 days.</p>
+        <p class="st-so">So what: these are predictions with stated accuracy (PD ROC-AUC 0.69, early warning 0.85 on later, unseen data) — use them to rank attention, not to decide individual credit.</p>
+        <button class="tp-btn st-go" type="button" data-goto="predictive"><svg class="tp-i"><use href="#i-spark"/></svg>Explore predictive risk</button>
+      </div>
+      <div class="st-fig"><p class="st-cap">Today’s open book by predicted risk segment</p><div data-draw="c_segs" data-source="risk_m"></div></div>
+    </article>
+
+    <article class="st-ch st-ch-last" id="ch-act">
+      <div class="st-text">
+        <p class="st-num">07 · What to do</p>
+        <h3>The highest-priority actions</h3>
+        <p>Each action below fired from a rule tested on the selected data, with its evidence and limits in the Action centre.</p>
+        <button class="tp-btn st-go" type="button" data-goto="actions"><svg class="tp-i"><use href="#i-compass"/></svg>Open the action centre</button>
+      </div>
+      <ol class="st-actions" data-draw="story_actions" data-source="actions"></ol>
+    </article>
+    <p class="st-foot"><svg class="tp-i"><use href="#i-book"/></svg>Definitions, data notes and validation checks are on the <button class="tp-link" type="button" data-goto="method">Methodology</button> tab.</p>
+  </section>
+
+  <!-- ===================== 1. OVERVIEW ===================== -->
+  <section class="tp-page" id="overview" role="tabpanel" hidden>
+    <div class="tp-ph"><h2>Executive portfolio overview</h2><p>Lending growth, portfolio quality and exposure at 31 Oct 2026, for the division chosen above.</p></div>
+    <div class="tp-kpis">
+      <article class="tp-kpi" id="k-disb"><header><span class="tp-ico"><svg><use href="#i-cash"/></svg></span><h3>Total disbursement</h3><span class="tp-help" tabindex="0">?<span role="tooltip">Principal disbursed Jan–Oct 2026 (sum of Principal_Amount by disbursement date), compared with Jan–Oct 2025.</span></span></header>
+        <div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="disb_ytd" data-w="division={div}" data-fmt="bdt">—</div>
+        <p class="tp-kpi-c"><span data-draw="d" data-src="kpi" data-f="disb_yoy" data-w="division={div}" data-good="up">—</span> vs Jan–Oct 2025</p>
+        <p class="tp-kpi-p">Jan–Oct 2025: <span data-draw="v" data-src="kpi" data-f="disb_ytd_prev" data-w="division={div}" data-fmt="bdt">—</span></p></article>
+      <article class="tp-kpi" id="k-glp"><header><span class="tp-ico"><svg><use href="#i-briefcase"/></svg></span><h3>Gross loan portfolio</h3><span class="tp-help" tabindex="0">?<span role="tooltip">Outstanding principal on open loans at 31 Oct 2026 (principal less principal repaid), excluding written-off loans. Also the total outstanding principal.</span></span></header>
+        <div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="glp" data-w="division={div}" data-fmt="bdt">—</div>
+        <p class="tp-kpi-c"><span data-draw="d" data-src="kpi" data-f="glp_yoy" data-w="division={div}" data-good="up">—</span> vs 31 Oct 2025</p>
+        <p class="tp-kpi-p">31 Oct 2025: <span data-draw="v" data-src="kpi" data-f="glp_prev" data-w="division={div}" data-fmt="bdt">—</span></p></article>
+      <article class="tp-kpi" id="k-net"><header><span class="tp-ico"><svg><use href="#i-wallet"/></svg></span><h3>Net loan portfolio</h3><span class="tp-help" tabindex="0">?<span role="tooltip">Gross loan portfolio less expected credit loss: the book value after provisions.</span></span></header>
+        <div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="net_glp" data-w="division={div}" data-fmt="bdt">—</div>
+        <p class="tp-kpi-c">Coverage <span data-draw="v" data-src="kpi" data-f="ecl_r" data-w="division={div}" data-fmt="pct2">—</span> of gross</p>
+        <p class="tp-kpi-p">At 31 Oct 2026</p></article>
+      <article class="tp-kpi" id="k-borr"><header><span class="tp-ico"><svg><use href="#i-users"/></svg></span><h3>Active borrowers</h3><span class="tp-help" tabindex="0">?<span role="tooltip">Distinct customers with at least one open loan at month-end.</span></span></header>
+        <div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="borrowers" data-w="division={div}" data-fmt="num">—</div>
+        <p class="tp-kpi-c"><span data-draw="d" data-src="kpi" data-f="borrowers_yoy" data-w="division={div}" data-good="up">—</span> vs 31 Oct 2025</p>
+        <p class="tp-kpi-p"><span data-draw="v" data-src="kpi" data-f="active_loans" data-w="division={div}" data-fmt="num">—</span> active loans</p></article>
+      <article class="tp-kpi" id="k-loans"><header><span class="tp-ico"><svg><use href="#i-doc"/></svg></span><h3>Loans disbursed</h3><span class="tp-help" tabindex="0">?<span role="tooltip">Count of loans disbursed Jan–Oct 2026, compared with Jan–Oct 2025.</span></span></header>
+        <div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="loans_ytd" data-w="division={div}" data-fmt="num">—</div>
+        <p class="tp-kpi-c"><span data-draw="d" data-src="kpi" data-f="loans_yoy" data-w="division={div}" data-good="up">—</span> vs Jan–Oct 2025</p>
+        <p class="tp-kpi-p">Jan–Oct 2025: <span data-draw="v" data-src="kpi" data-f="loans_ytd_prev" data-w="division={div}" data-fmt="num">—</span></p></article>
+      <article class="tp-kpi" id="k-npl"><header><span class="tp-ico tp-ico-bad"><svg><use href="#i-alert"/></svg></span><h3>Gross NPL ratio</h3><span class="tp-help" tabindex="0">?<span role="tooltip">Outstanding principal of open loans 90+ days past due ÷ gross loan portfolio.</span></span></header>
+        <div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="npl_r" data-w="division={div}" data-fmt="pct2">—</div>
+        <p class="tp-kpi-c"><span data-draw="d" data-src="kpi" data-f="npl_chg" data-w="division={div}" data-fmt="pp" data-good="down">—</span> vs 31 Oct 2025</p>
+        <p class="tp-kpi-p">NPL principal <span data-draw="v" data-src="kpi" data-f="npl_amt" data-w="division={div}" data-fmt="bdt">—</span></p></article>
+      <article class="tp-kpi" id="k-par30"><header><span class="tp-ico tp-ico-warn"><svg><use href="#i-gauge"/></svg></span><h3>PAR 30</h3><span class="tp-help" tabindex="0">?<span role="tooltip">Whole outstanding principal of open loans 30+ days past due ÷ gross loan portfolio.</span></span></header>
+        <div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="par30_r" data-w="division={div}" data-fmt="pct2">—</div>
+        <p class="tp-kpi-c"><span data-draw="d" data-src="kpi" data-f="par30_chg" data-w="division={div}" data-fmt="pp" data-good="down">—</span> vs 31 Oct 2025</p>
+        <p class="tp-kpi-p">At risk <span data-draw="v" data-src="kpi" data-f="par30_amt" data-w="division={div}" data-fmt="bdt">—</span></p></article>
+      <article class="tp-kpi" id="k-ce"><header><span class="tp-ico tp-ico-good"><svg><use href="#i-check"/></svg></span><h3>Collection efficiency</h3><span class="tp-help" tabindex="0">?<span role="tooltip">Amount paid ÷ amount scheduled on instalments due Aug 2025–Jul 2026, compared with the 12 months before. Instalments due after Jul 2026 are not yet settled in the data.</span></span></header>
+        <div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="ce" data-w="division={div}" data-fmt="pct">—</div>
+        <p class="tp-kpi-c"><span data-draw="d" data-src="kpi" data-f="ce_chg" data-w="division={div}" data-fmt="pp" data-good="up">—</span> vs prior 12 months</p>
+        <p class="tp-kpi-p">12 months to Jul 2026</p></article>
+      <article class="tp-kpi" id="k-ecl"><header><span class="tp-ico"><svg><use href="#i-shield"/></svg></span><h3>Expected credit loss</h3><span class="tp-help" tabindex="0">?<span role="tooltip">IFRS 9-style ECL = PD × LGD × exposure. Stage 1 uses origination PD and 65% LGD; stage 2 (30–89 DPD or rescheduled) lifetime PD = min(95%, 1.85 × PD); stage 3 (90+ DPD) PD 100% and 80% LGD.</span></span></header>
+        <div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="ecl" data-w="division={div}" data-fmt="bdt">—</div>
+        <p class="tp-kpi-c"><span data-draw="d" data-src="kpi" data-f="ecl_yoy" data-w="division={div}" data-good="down">—</span> vs 31 Oct 2025</p>
+        <p class="tp-kpi-p">31 Oct 2025: <span data-draw="v" data-src="kpi" data-f="ecl_prev" data-w="division={div}" data-fmt="bdt">—</span></p></article>
+    </div>
+
+    <div class="tp-insight" id="ov-insights">
+      <h3><svg class="tp-i"><use href="#i-bolt"/></svg>Management insights</h3>
+      <ul>
+        <li><svg class="tp-i"><use href="#i-up"/></svg><span>Disbursement in Jan–Oct 2026 is <b data-draw="v" data-src="kpi" data-f="disb_yoy" data-w="division={div}" data-fmt="chg">—</b> on the same months of 2025, and the loan book <span data-draw="pick" data-src="kpi" data-f="glp_yoy" data-w="division={div}"></span><span data-pick="pos">grew</span><span data-pick="neg" hidden>shrank</span> <b data-draw="v" data-src="kpi" data-f="glp_yoy" data-w="division={div}" data-fmt="chg">—</b> year on year to <b data-draw="v" data-src="kpi" data-f="glp" data-w="division={div}" data-fmt="bdt">—</b>.</span></li>
+        <li><svg class="tp-i"><use href="#i-gauge"/></svg><span>PAR 30 <span data-draw="pick" data-src="kpi" data-f="par30_chg" data-w="division={div}"></span><span data-pick="pos">rose</span><span data-pick="neg" hidden>fell</span> by <b data-draw="d" data-src="kpi" data-f="par30_chg" data-w="division={div}" data-fmt="pp" data-good="down">—</b> to <b data-draw="v" data-src="kpi" data-f="par30_r" data-w="division={div}" data-fmt="pct2">—</b>; the gross NPL ratio is <b data-draw="v" data-src="kpi" data-f="npl_r" data-w="division={div}" data-fmt="pct2">—</b>. Part of the fall reflects fast 2026 growth enlarging the denominator.</span></li>
+        <li><svg class="tp-i"><use href="#i-pin"/></svg><span><b data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=top_geo" data-fmt="text">—</b> holds the largest outstanding exposure, <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=top_geo" data-fmt="pct">—</b> of the selected book.</span></li>
+        <li><svg class="tp-i"><use href="#i-person"/></svg><span><b data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=worst_occ" data-fmt="text">—</b> borrowers show the highest PAR 30 among occupations with at least 2% of the book, at <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=worst_occ" data-fmt="pct2">—</b>.</span></li>
+        <li><svg class="tp-i"><use href="#i-check"/></svg><span>Collection efficiency over the 12 months to Jul 2026 is <b data-draw="v" data-src="kpi" data-f="ce" data-w="division={div}" data-fmt="pct">—</b>, <b data-draw="d" data-src="kpi" data-f="ce_chg" data-w="division={div}" data-fmt="pp" data-good="up">—</b> on the year before.</span></li>
+      </ul>
+    </div>
+
+    <h2 class="tp-sec">Portfolio growth</h2>
+    <div class="tp-cards">
+      <section class="tp-card tp-wide" id="c-disb"><h3>Monthly disbursement</h3><p class="tp-note">Principal disbursed per month. October 2026 is the largest month on record.</p>
+        <div class="tp-chart" data-draw="c_disb" data-source="mon_m"></div></section>
+      <section class="tp-card" id="c-glp"><h3>Outstanding portfolio and ECL</h3><p class="tp-note">Gross loan portfolio and expected credit loss at each month-end.</p>
+        <div class="tp-legend"><span><i style="background:#137C8B"></i>Gross loan portfolio</span><span><i style="background:#E3A008"></i>Expected credit loss</span></div>
+        <div class="tp-chart" data-draw="c_glp" data-source="mon_m"></div></section>
+      <section class="tp-card" id="c-annual"><h3>Annual disbursement and growth</h3><p class="tp-note">Calendar-year disbursement; 2026 covers Jan–Oct only. Labels show growth on the year before.</p>
+        <div class="tp-chart" data-draw="c_annual" data-source="mon_m"></div></section>
+    </div>
+
+    <h2 class="tp-sec">Credit quality trend</h2>
+    <div class="tp-cards">
+      <section class="tp-card tp-wide" id="c-quality"><h3>Portfolio at risk and NPL ratio</h3><p class="tp-note">Share of the gross loan portfolio past due by at least 1, 7, 30 and 90 days (PAR 90 is the gross NPL ratio), month-end, from Jul 2021.</p>
+        <div class="tp-legend"><span><i style="background:#7FB7BF"></i>PAR 1</span><span><i style="background:#137C8B"></i>PAR 7</span><span><i style="background:#E3A008"></i>PAR 30</span><span><i style="background:#D64545"></i>PAR 90 / NPL</span></div>
+        <div class="tp-chart" data-draw="c_quality" data-source="mon_m"></div></section>
+    </div>
+
+    <h2 class="tp-sec">Portfolio composition</h2>
+    <div class="tp-cards">
+      <section class="tp-card" id="c-prod-mix"><h3>Disbursement by product</h3><p class="tp-note">All loans 2021–2026, with the share of outstanding principal.</p>
+        <div data-draw="c_mix" data-dim="Product" data-source="seg_m"></div></section>
+      <section class="tp-card" id="c-grade-mix"><h3>Risk grade at origination</h3><p class="tp-note">Outstanding principal and 12-month default rate by the grade assigned when the loan was made.</p>
+        <div data-draw="c_mix" data-dim="Risk grade at origination" data-source="seg_m"></div></section>
+      <section class="tp-card" id="c-type-mix"><h3>New versus repeat borrowers</h3><p class="tp-note">Repeat loans are any loan after a customer’s first.</p>
+        <div data-draw="c_mix" data-dim="Borrower type" data-source="seg_m"></div></section>
+      <section class="tp-card" id="c-purpose-mix"><h3>Loan purpose</h3><p class="tp-note">Stated purpose at application.</p>
+        <div data-draw="c_mix" data-dim="Loan purpose" data-source="seg_m"></div></section>
+    </div>
+  </section>
+
+  <!-- ===================== 2. GEOGRAPHY ===================== -->
+  <section class="tp-page" id="geography" role="tabpanel" hidden>
+    <div class="tp-ph"><h2>Geographic credit risk intelligence</h2><p>Where lending grows and where credit risk builds. Click a division on the map to drill into its districts, then a district to see its upazilas.</p></div>
+    <div class="tp-kpis tp-kpis-6">
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-cash"/></svg></span><h3>Disbursement, last 12 months</h3></header><div class="tp-kpi-v" data-draw="v" data-src="geo_m" data-f="disb_ttm" data-w="id={gid}" data-fmt="bdt">—</div><p class="tp-kpi-c"><span data-draw="d" data-src="geo_m" data-f="growth" data-w="id={gid}" data-good="up">—</span> vs prior 12 months</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-briefcase"/></svg></span><h3>Outstanding portfolio</h3></header><div class="tp-kpi-v" data-draw="v" data-src="geo_m" data-f="glp" data-w="id={gid}" data-fmt="bdt">—</div><p class="tp-kpi-p">At 31 Oct 2026</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-bad"><svg><use href="#i-alert"/></svg></span><h3>NPL ratio</h3></header><div class="tp-kpi-v" data-draw="v" data-src="geo_m" data-f="npl_r" data-w="id={gid}" data-fmt="pct2">—</div><p class="tp-kpi-p">90+ DPD ÷ portfolio</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-warn"><svg><use href="#i-gauge"/></svg></span><h3>PAR 30</h3></header><div class="tp-kpi-v" data-draw="v" data-src="geo_m" data-f="par30_r" data-w="id={gid}" data-fmt="pct2">—</div><p class="tp-kpi-p">30+ DPD ÷ portfolio</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-good"><svg><use href="#i-check"/></svg></span><h3>Collection efficiency</h3></header><div class="tp-kpi-v" data-draw="v" data-src="geo_m" data-f="ce" data-w="id={gid}" data-fmt="pct">—</div><p class="tp-kpi-p">Due Aug 2025–Jul 2026</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-users"/></svg></span><h3>Active borrowers</h3></header><div class="tp-kpi-v" data-draw="v" data-src="geo_m" data-f="borrowers" data-w="id={gid}" data-fmt="num">—</div><p class="tp-kpi-p"><span data-draw="v" data-src="geo_m" data-f="penetration" data-w="id={gid}" data-fmt="pct">—</span> of registered customers</p></article>
+    </div>
+    <div class="tp-cards">
+      <section class="tp-card" id="c-map"><h3>Bangladesh division map</h3>
+        <div class="tp-seg" role="group" aria-label="Map measure">
+          <button class="tp-segb" type="button" data-metric="disb_ttm">Disbursement</button><button class="tp-segb" type="button" data-metric="glp">Outstanding</button><button class="tp-segb" type="button" data-metric="npl_r">NPL</button><button class="tp-segb" type="button" data-metric="par30_r">PAR 30</button><button class="tp-segb" type="button" data-metric="ce">Collection efficiency</button>
+        </div>
+        <p class="tp-note">Division boundaries from geoBoundaries (open licence). Darker means more lending, or more risk for NPL and PAR 30, or weaker collection. Click a division to filter.</p>
+        <div class="tp-chart tp-map" data-draw="c_map" data-source="geo_m bd_map"></div></section>
+      <section class="tp-card" id="c-quad"><h3>Growth versus risk, by district</h3><p class="tp-note">Disbursement growth (last 12 months vs the 12 before) against NPL ratio; bubble size is outstanding portfolio. Lines mark median growth and the portfolio NPL ratio. Districts outside the selected division are faded.</p>
+        <div class="tp-chart tp-tall" data-draw="c_quad" data-source="geo_m"></div></section>
+    </div>
+    <div class="tp-cards">
+      <section class="tp-card tp-wide" id="t-dist"><h3>District scorecard</h3><p class="tp-note">Click a district to list its upazilas. Quadrant uses the same rule as the scatter. Penetration is active borrowers ÷ registered customers.</p>
+        <div class="tp-tablebox"><table class="tp-table" data-draw="t_dist" data-source="geo_m" data-row-key="id"></table></div></section>
+      <section class="tp-card tp-wide" id="t-upz" hidden><h3>Upazilas in <span data-draw="v" data-src="geo_m" data-f="name" data-w="id=district:{div}:{dist}" data-fmt="text">—</span></h3><p class="tp-note">Third drill level. <button class="tp-link tp-clear-dist" type="button">Clear district</button></p>
+        <div class="tp-tablebox"><table class="tp-table" data-draw="t_upz" data-source="geo_m" data-row-key="id"></table></div></section>
+    </div>
+    <div class="tp-cards">
+      <section class="tp-card" id="c-div-risk"><h3>Division risk and collection</h3><p class="tp-note">NPL ratio, PAR 30 and collection efficiency per division. Click a division to filter.</p>
+        <div data-draw="c_div" data-source="geo_m"></div></section>
+      <section class="tp-card" id="c-urban"><h3>Urban versus rural performance</h3><p class="tp-note">By the borrower’s registered location category.</p>
+        <div data-draw="c_mix" data-dim="Urban / rural" data-source="seg_m"></div></section>
+      <section class="tp-card tp-wide" id="c-div-growth"><h3>Regional loan growth, 2021–2026</h3><p class="tp-note">Annual disbursement per division on one shared scale; 2026 is Jan–Oct.</p>
+        <div class="tp-multi" data-draw="c_div_growth" data-source="mon_m"></div></section>
+    </div>
+  </section>
+
+  <!-- ===================== 3. CUSTOMERS ===================== -->
+  <section class="tp-page" id="customers" role="tabpanel" hidden>
+    <div class="tp-ph"><h2>Customer demographic &amp; occupational intelligence</h2><p>Who borrows, how much, and how reliably they repay. The data, not the label, decides which groups are risky.</p></div>
+    <div class="tp-cards">
+      <section class="tp-card tp-wide" id="t-age"><h3>Age groups</h3><p class="tp-note">Age at 31 Oct 2026. Darker cells are worse. On-time rate counts instalments paid on or before the due date (due to Jul 2026); 12-month default is the share of loans reaching 90+ DPD within a year, for loans made to Oct 2025.</p>
+        <div class="tp-tablebox"><table class="tp-table" data-draw="t_seg" data-dim="Age group" data-source="seg_m" data-row-key="id"></table></div></section>
+      <section class="tp-card tp-wide" id="t-occ"><h3>Occupation versus risk matrix</h3><p class="tp-note">All 15 occupation groups. Sort any column; darker cells are worse for that measure.</p>
+        <div class="tp-tablebox"><table class="tp-table" data-draw="t_occ" data-source="seg_m" data-row-key="id"></table></div></section>
+    </div>
+    <div class="tp-cards">
+      <section class="tp-card" id="occ-leaders"><h3>Occupation leaders</h3><p class="tp-note">Which occupation is highest on each measure (risk ratios exclude groups under 2% of the book).</p>
+        <dl class="tp-leaders">
+          <div><dt><svg class="tp-i"><use href="#i-doc"/></svg>Highest loan volume</dt><dd><span data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=occ_loans" data-fmt="text">—</span> · <span data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=occ_loans" data-fmt="num">—</span> loans</dd></div>
+          <div><dt><svg class="tp-i"><use href="#i-cash"/></svg>Highest average loan</dt><dd><span data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=occ_avg" data-fmt="text">—</span> · <span data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=occ_avg" data-fmt="bdt">—</span></dd></div>
+          <div><dt><svg class="tp-i"><use href="#i-briefcase"/></svg>Highest outstanding exposure</dt><dd><span data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=occ_glp" data-fmt="text">—</span> · <span data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=occ_glp" data-fmt="bdt">—</span></dd></div>
+          <div><dt><svg class="tp-i"><use href="#i-repeat"/></svg>Highest repeat borrowing</dt><dd><span data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=occ_repeat" data-fmt="text">—</span> · <span data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=occ_repeat" data-fmt="pct">—</span> of loans</dd></div>
+          <div><dt><svg class="tp-i"><use href="#i-check"/></svg>Highest on-time repayment</dt><dd><span data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=occ_ontime" data-fmt="text">—</span> · <span data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=occ_ontime" data-fmt="pct">—</span></dd></div>
+          <div><dt><svg class="tp-i"><use href="#i-gauge"/></svg>Highest PAR 30</dt><dd><span data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=occ_par30" data-fmt="text">—</span> · <span data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=occ_par30" data-fmt="pct2">—</span></dd></div>
+          <div><dt><svg class="tp-i"><use href="#i-alert"/></svg>Highest NPL ratio</dt><dd><span data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=occ_npl" data-fmt="text">—</span> · <span data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=occ_npl" data-fmt="pct2">—</span></dd></div>
+          <div><dt><svg class="tp-i"><use href="#i-shield"/></svg>Highest expected credit loss</dt><dd><span data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=occ_ecl" data-fmt="text">—</span> · <span data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=occ_ecl" data-fmt="bdt">—</span></dd></div>
+        </dl></section>
+      <section class="tp-card" id="c-occ-scatter"><h3>Average loan size versus NPL ratio</h3><p class="tp-note">One bubble per occupation; size is outstanding portfolio. Lines mark the portfolio averages.</p>
+        <div class="tp-chart tp-tall" data-draw="c_occ" data-source="seg_m"></div></section>
+    </div>
+    <h2 class="tp-sec">Demand versus repayment</h2>
+    <p class="tp-lead">Occupations sorted by share of loans (demand: at or above the median share) and 12-month default rate (good repayment: at or below the portfolio rate).</p>
+    <div class="tp-quads">
+      <div class="tp-q tp-q-good"><h4><svg class="tp-i"><use href="#i-target"/></svg>Strong demand, good repayment</h4><ul data-draw="q_occ" data-source="seg_m" data-q="hg"></ul></div>
+      <div class="tp-q tp-q-bad"><h4><svg class="tp-i"><use href="#i-alert"/></svg>Strong demand, weak repayment</h4><ul data-draw="q_occ" data-source="seg_m" data-q="hb"></ul></div>
+      <div class="tp-q"><h4><svg class="tp-i"><use href="#i-check"/></svg>Lower demand, good repayment</h4><ul data-draw="q_occ" data-source="seg_m" data-q="lg"></ul></div>
+      <div class="tp-q tp-q-warn"><h4><svg class="tp-i"><use href="#i-flag"/></svg>Lower demand, weak repayment</h4><ul data-draw="q_occ" data-source="seg_m" data-q="lb"></ul></div>
+    </div>
+    <h2 class="tp-sec">More demographic cuts</h2>
+    <div class="tp-seg" role="group" aria-label="Breakdown" id="seg-dims">
+      <button class="tp-segb" type="button" data-dim="Gender">Gender</button><button class="tp-segb" type="button" data-dim="Income bracket">Income</button><button class="tp-segb" type="button" data-dim="Education">Education</button><button class="tp-segb" type="button" data-dim="Account tenure">Account tenure</button><button class="tp-segb" type="button" data-dim="Urban / rural">Urban / rural</button><button class="tp-segb" type="button" data-dim="Borrower type">New / repeat</button><button class="tp-segb" type="button" data-dim="Customer segment">Customer segment</button>
+    </div>
+    <div class="tp-cards">
+      <section class="tp-card tp-wide" id="t-explore"><div class="tp-tablebox"><table class="tp-table" data-draw="t_seg" data-dim="@segDim" data-source="seg_m" data-row-key="id"></table></div></section>
+    </div>
+  </section>
+
+  <!-- ===================== 4. PRODUCTS ===================== -->
+  <section class="tp-page" id="products" role="tabpanel" hidden>
+    <div class="tp-ph"><h2>Loan product &amp; origination performance</h2><p>Which products and loan structures produce sustainable growth.</p></div>
+    <div class="tp-seg" role="group" aria-label="Application year" id="fy-btns">
+      <button class="tp-segb" type="button" data-fy="All">All years</button><button class="tp-segb" type="button" data-fy="2021">2021</button><button class="tp-segb" type="button" data-fy="2022">2022</button><button class="tp-segb" type="button" data-fy="2023">2023</button><button class="tp-segb" type="button" data-fy="2024">2024</button><button class="tp-segb" type="button" data-fy="2025">2025</button><button class="tp-segb" type="button" data-fy="2026">2026</button>
+    </div>
+    <div class="tp-kpis">
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-doc"/></svg></span><h3>Applications</h3></header><div class="tp-kpi-v" data-draw="v" data-src="fun_m" data-f="applications" data-w="id={div}|{fy}" data-fmt="num">—</div><p class="tp-kpi-p">Selected application year</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-good"><svg><use href="#i-check"/></svg></span><h3>Approval rate</h3></header><div class="tp-kpi-v" data-draw="v" data-src="fun_m" data-f="approval_r" data-w="id={div}|{fy}" data-fmt="pct">—</div><p class="tp-kpi-p">Approved ÷ applications</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-bad"><svg><use href="#i-alert"/></svg></span><h3>Rejection rate</h3></header><div class="tp-kpi-v" data-draw="v" data-src="fun_m" data-f="rejection_r" data-w="id={div}|{fy}" data-fmt="pct">—</div><p class="tp-kpi-p">Rejected ÷ applications</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-cash"/></svg></span><h3>Total disbursement</h3></header><div class="tp-kpi-v" data-draw="v" data-src="fun_m" data-f="disb_amt" data-w="id={div}|{fy}" data-fmt="bdt">—</div><p class="tp-kpi-p">From the year’s applications</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-scale"/></svg></span><h3>Average loan amount</h3></header><div class="tp-kpi-v" data-draw="v" data-src="fun_m" data-f="avg_loan" data-w="id={div}|{fy}" data-fmt="bdt">—</div><p class="tp-kpi-p">Disbursed ÷ loans</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-clock"/></svg></span><h3>Average loan tenure</h3></header><div class="tp-kpi-v" data-draw="v" data-src="orig" data-f="avg_tenure" data-w="division={div}" data-fmt="mo">—</div><p class="tp-kpi-p">All years, loan-weighted</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-coins"/></svg></span><h3>Average interest rate</h3></header><div class="tp-kpi-v" data-draw="v" data-src="orig" data-f="avg_rate" data-w="division={div}" data-fmt="pct2">—</div><p class="tp-kpi-p">Annual, all years</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-repeat"/></svg></span><h3>Repeat borrower rate</h3></header><div class="tp-kpi-v" data-draw="v" data-src="orig" data-f="repeat_r" data-w="division={div}" data-fmt="pct">—</div><p class="tp-kpi-p">Share of loans, all years</p></article>
+    </div>
+    <div class="tp-cards">
+      <section class="tp-card" id="c-funnel"><h3>Application funnel</h3><p class="tp-note">From application to disbursement for the selected year; the bar for each step starts at the same edge.</p>
+        <div data-draw="c_funnel" data-source="fun_m"></div></section>
+      <section class="tp-card" id="c-rej"><h3>Rejection reasons</h3><p class="tp-note">All years, for the selected division.</p>
+        <div data-draw="c_rej" data-source="rejections"></div></section>
+    </div>
+    <div class="tp-cards">
+      <section class="tp-card tp-wide" id="t-prod"><h3>Product scorecard</h3><p class="tp-note">All loans 2021–2026. Risk-adjusted return = (interest + fees − cost of funds − ECL − recovery cost) ÷ disbursed, an analytical estimate.</p>
+        <div class="tp-tablebox"><table class="tp-table" data-draw="t_prod" data-source="seg_m" data-row-key="id"></table></div></section>
+    </div>
+    <div class="tp-cards">
+      <section class="tp-card" id="c-amount"><h3>Loan size bands</h3><p class="tp-note">Loans, 12-month default rate and risk-adjusted return by principal. No loans fall below ৳1,000; a ৳50,001–100,000 band is added for the largest loans.</p>
+        <div data-draw="c_band" data-dim="Loan amount band" data-source="seg_m"></div></section>
+      <section class="tp-card" id="c-tenure"><h3>Loan tenure</h3><p class="tp-note">Which tenure defaults most often.</p>
+        <div data-draw="c_band" data-dim="Loan tenure" data-source="seg_m"></div></section>
+      <section class="tp-card" id="c-purpose"><h3>Loan purpose</h3><p class="tp-note">Loans and default by stated purpose.</p>
+        <div data-draw="c_band" data-dim="Loan purpose" data-source="seg_m"></div></section>
+      <section class="tp-card" id="c-newrep"><h3>First-time versus repeat</h3><p class="tp-note">Repeat borrowers receive larger loans; compare default.</p>
+        <div data-draw="c_band" data-dim="Borrower type" data-source="seg_m"></div></section>
+      <section class="tp-card" id="c-score"><h3>Credit score at origination</h3><p class="tp-note">Loans and 12-month default by score band.</p>
+        <div data-draw="c_bands" data-dim="Credit score" data-source="bands"></div></section>
+      <section class="tp-card" id="c-lti"><h3>Loan size relative to income</h3><p class="tp-note">Principal ÷ estimated monthly income, and debt-to-income at application.</p>
+        <div data-draw="c_bands" data-dim="Loan-to-income" data-source="bands"></div>
+        <div data-draw="c_bands" data-dim="Debt-to-income" data-source="bands"></div></section>
+    </div>
+    <div class="tp-insight" id="prod-answers">
+      <h3><svg class="tp-i"><use href="#i-target"/></svg>Strategic questions answered</h3>
+      <ul>
+        <li><svg class="tp-i"><use href="#i-scale"/></svg><span><b>Do larger loans earn proportionately more?</b> The best risk-adjusted return is in <b data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=band_rar_best" data-fmt="text">—</b> (<span data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=band_rar_best" data-fmt="pct2">—</span> of principal) and the weakest in <b data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=band_rar_worst" data-fmt="text">—</b> (<span data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=band_rar_worst" data-fmt="pct2">—</span>).</span></li>
+        <li><svg class="tp-i"><use href="#i-shield"/></svg><span><b>Highest credit losses:</b> <b data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=prod_ecl" data-fmt="text">—</b> carries the largest ECL (<span data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=prod_ecl" data-fmt="bdt">—</span>); <b data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=prod_def" data-fmt="text">—</b> has the highest 12-month default rate (<span data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=prod_def" data-fmt="pct">—</span>).</span></li>
+        <li><svg class="tp-i"><use href="#i-clock"/></svg><span><b>Riskiest tenure:</b> <b data-draw="v" data-src="insights" data-f="name" data-w="division={div}&amp;item=tenure_def" data-fmt="text">—</b> loans default most often, at <span data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=tenure_def" data-fmt="pct">—</span> within 12 months.</span></li>
+        <li><svg class="tp-i"><use href="#i-repeat"/></svg><span><b>Do repeat borrowers get disproportionately large limits?</b> Their average loan is <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=repeat_avg" data-fmt="bdt">—</b> against <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=new_avg" data-fmt="bdt">—</b> for first loans, yet they default at <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=repeat_def" data-fmt="pct">—</b> versus <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=new_def" data-fmt="pct">—</b>.</span></li>
+        <li><svg class="tp-i"><use href="#i-wallet"/></svg><span><b>Does loan size relative to income predict default?</b> Loans above 2× monthly income default at <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=lti_hi" data-fmt="pct">—</b> against <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=lti_lo" data-fmt="pct">—</b> at 0.25× or less; debt-to-income of 0.41–0.50 defaults at <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=dti_hi" data-fmt="pct">—</b> vs <b data-draw="v" data-src="insights" data-f="value" data-w="division={div}&amp;item=dti_lo" data-fmt="pct">—</b> at 0.21–0.30.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== 5. COLLECTIONS ===================== -->
+  <section class="tp-page" id="collections" role="tabpanel" hidden>
+    <div class="tp-ph"><h2>Repayment &amp; collection intelligence</h2><p>The quality of the repayment process and early signs of deterioration. Instalment measures cover the 12 settled months Aug 2025–Jul 2026.</p></div>
+    <div class="tp-kpis">
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-calendar"/></svg></span><h3>Scheduled collection</h3></header><div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="sched12" data-w="division={div}" data-fmt="bdt">—</div><p class="tp-kpi-c"><span data-draw="d" data-src="kpi" data-f="sched12_yoy" data-w="division={div}" data-good="up">—</span> vs prior 12 months</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-cash"/></svg></span><h3>Actual collection</h3></header><div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="paid12" data-w="division={div}" data-fmt="bdt">—</div><p class="tp-kpi-c"><span data-draw="d" data-src="kpi" data-f="paid12_yoy" data-w="division={div}" data-good="up">—</span> vs prior 12 months</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-good"><svg><use href="#i-check"/></svg></span><h3>Collection efficiency</h3></header><div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="ce" data-w="division={div}" data-fmt="pct">—</div><p class="tp-kpi-c"><span data-draw="d" data-src="kpi" data-f="ce_chg" data-w="division={div}" data-fmt="pp" data-good="up">—</span> vs prior 12 months</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-good"><svg><use href="#i-clock"/></svg></span><h3>On-time repayment rate</h3></header><div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="ontime_r" data-w="division={div}" data-fmt="pct">—</div><p class="tp-kpi-c"><span data-draw="d" data-src="kpi" data-f="ontime_chg" data-w="division={div}" data-fmt="pp" data-good="up">—</span> vs prior 12 months</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-warn"><svg><use href="#i-clock"/></svg></span><h3>Late payment rate</h3></header><div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="late_r" data-w="division={div}" data-fmt="pct">—</div><p class="tp-kpi-c"><span data-draw="d" data-src="kpi" data-f="late_chg" data-w="division={div}" data-fmt="pp" data-good="down">—</span> vs prior 12 months</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-bad"><svg><use href="#i-alert"/></svg></span><h3>Missed instalments</h3></header><div class="tp-kpi-v" data-draw="v" data-src="kpi" data-f="missed12" data-w="division={div}" data-fmt="num">—</div><p class="tp-kpi-c"><span data-draw="d" data-src="kpi" data-f="missed12_yoy" data-w="division={div}" data-good="down">—</span> vs prior 12 months</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-bad"><svg><use href="#i-wallet"/></svg></span><h3>Overdue amount</h3></header><div class="tp-kpi-v" data-draw="v" data-src="delinquency" data-f="overdue_amount" data-w="division={div}" data-fmt="bdt">—</div><p class="tp-kpi-p">Arrears on open loans, instalments due to Jul 2026</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-warn"><svg><use href="#i-gauge"/></svg></span><h3>Average days past due</h3></header><div class="tp-kpi-v" data-draw="v" data-src="delinquency" data-f="avg_dpd" data-w="division={div}" data-fmt="days">—</div><p class="tp-kpi-p">Across <span data-draw="v" data-src="delinquency" data-f="delinquent_loans" data-w="division={div}" data-fmt="num">—</span> delinquent open loans</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-repeat"/></svg></span><h3>Recovery rate</h3></header><div class="tp-kpi-v" data-draw="v" data-src="rec_m" data-f="recovery_r" data-w="id=Total|{div}|All" data-fmt="pct">—</div><p class="tp-kpi-p">Collected ÷ balance before each collection action</p></article>
+    </div>
+    <div class="tp-cards">
+      <section class="tp-card tp-wide" id="c-coll"><h3>Scheduled versus actual collection</h3><p class="tp-note">Amount due and amount paid by due month, Jan 2022–Jul 2026. Aug–Oct 2026 are left out: those instalments are not yet settled in the data.</p>
+        <div class="tp-legend"><span><i style="background:#778399"></i>Scheduled</span><span><i style="background:#137C8B"></i>Collected</span></div>
+        <div class="tp-chart" data-draw="c_coll" data-source="mon_m"></div></section>
+      <section class="tp-card" id="c-ce"><h3>Monthly collection efficiency and on-time rate</h3><p class="tp-note">Collected ÷ scheduled, and on-time instalments ÷ instalments due.</p>
+        <div class="tp-legend"><span><i style="background:#137C8B"></i>Collection efficiency</span><span><i style="background:#E3A008"></i>On-time rate</span></div>
+        <div class="tp-chart" data-draw="c_ce" data-source="mon_m"></div></section>
+      <section class="tp-card" id="c-status"><h3>Instalment status mix</h3><p class="tp-note">Share of instalments due each quarter paid on time, paid late or partly, and missed.</p>
+        <div class="tp-legend"><span><i style="background:#15966B"></i>On time</span><span><i style="background:#E9A23B"></i>Late or partial</span><span><i style="background:#D64545"></i>Missed</span></div>
+        <div class="tp-chart" data-draw="c_status" data-source="mon_m"></div></section>
+    </div>
+    <h2 class="tp-sec">Delinquency ageing and migration</h2>
+    <div class="tp-cards">
+      <section class="tp-card" id="c-ageing"><h3>Ageing buckets</h3><p class="tp-note">Open loans by days past due at 31 Oct 2026.</p>
+        <div data-draw="c_ageing" data-source="ageing"></div></section>
+      <section class="tp-card" id="c-agemx"><h3>Loan ageing matrix by division</h3><p class="tp-note">Share of each division’s outstanding principal in each bucket (Current omitted). The selected division is highlighted.</p>
+        <div data-draw="c_agemx" data-source="ageing"></div></section>
+      <section class="tp-card tp-wide" id="c-roll"><h3>Roll-rate matrix</h3><p class="tp-note">Where principal in each bucket sits one month later, averaged over Oct 2025 → Oct 2026. Forward roll <b data-draw="v" data-src="roll_sum" data-f="forward_r" data-w="division={div}" data-fmt="pct">—</b> and cure <b data-draw="v" data-src="roll_sum" data-f="cure_r" data-w="division={div}" data-fmt="pct">—</b> of delinquent principal per month; <b data-draw="v" data-src="roll_sum" data-f="current_to_delq_r" data-w="division={div}" data-fmt="pct2">—</b> of current principal turns delinquent.</p>
+        <div data-draw="c_roll" data-source="roll_m"></div></section>
+      <section class="tp-card" id="c-par-amt"><h3>Portfolio at risk, amounts</h3><p class="tp-note">Outstanding principal past due by at least 1, 30 and 90 days.</p>
+        <div class="tp-legend"><span><i style="background:#7FB7BF"></i>PAR 1</span><span><i style="background:#E3A008"></i>PAR 30</span><span><i style="background:#D64545"></i>PAR 90</span></div>
+        <div class="tp-chart" data-draw="c_paramt" data-source="mon_m"></div></section>
+      <section class="tp-card" id="c-missed"><h3>Missed instalments</h3><p class="tp-note">Instalments recorded as missed, overdue or waived, by due month (settled months).</p>
+        <div class="tp-chart" data-draw="c_missed" data-source="mon_m"></div></section>
+    </div>
+    <h2 class="tp-sec">Recovery</h2>
+    <div class="tp-cards">
+      <section class="tp-card" id="c-rec-ch"><h3>Recovery by collection channel</h3><p class="tp-note">Amount collected and recovery rate per channel, 2021–2026.</p>
+        <div data-draw="c_rec" data-dim="Channel" data-source="rec_m"></div></section>
+      <section class="tp-card" id="c-rec-st"><h3>Recovery by stage</h3><p class="tp-note">From automated sweeps to post-default recovery.</p>
+        <div data-draw="c_rec" data-dim="Recovery stage" data-source="rec_m"></div></section>
+      <section class="tp-card" id="c-rec-div"><h3>Recovery by division</h3><p class="tp-note">All divisions; promise-to-pay kept rate alongside.</p>
+        <div data-draw="c_recdiv" data-source="rec_m"></div></section>
+      <section class="tp-card" id="c-rec-out"><h3>Collection outcomes</h3><p class="tp-note">Share of collection actions by result.</p>
+        <div data-draw="c_rec" data-dim="Outcome" data-source="rec_m"></div></section>
+    </div>
+  </section>
+
+  <!-- ===================== 6. PREDICTIVE ===================== -->
+  <section class="tp-page" id="predictive" role="tabpanel" hidden>
+    <div class="tp-ph"><h2>Credit risk &amp; predictive analytics</h2><p>Forward-looking risk from two models fitted in Python on this data (logistic regression, tested on a later out-of-time period). They are separate from the scores stored in the source data.</p></div>
+    <h2 class="tp-sec"><svg class="tp-i"><use href="#i-target"/></svg>Model 1 · Probability of default</h2>
+    <p class="tp-lead">Predicts whether a loan reaches 90+ days past due (or is written off) within 12 months of disbursement, from information known at origination. Trained on loans made Jan 2021–Jun 2024; tested on Jul 2024–Oct 2025; applied to every loan open on 31 Oct 2026.</p>
+    <div class="tp-kpis">
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-spark"/></svg></span><h3>Average predicted PD, open book</h3></header><div class="tp-kpi-v" data-draw="v" data-src="risk_m" data-f="avg_pd" data-w="id={rk}|All" data-fmt="pct2">—</div><p class="tp-kpi-p">Loan-weighted; 90+ DPD loans counted at 100%</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-scale"/></svg></span><h3>Test default rate: actual vs predicted</h3></header><div class="tp-kpi-v"><span data-draw="v" data-src="model_metrics" data-f="value" data-w="model=PD&amp;metric=test_rate" data-fmt="pct2">—</span> <small>vs <span data-draw="v" data-src="model_metrics" data-f="value" data-w="model=PD&amp;metric=test_pred_rate" data-fmt="pct2">—</span></small></div><p class="tp-kpi-p">Out-of-time loans, all divisions</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-bad"><svg><use href="#i-alert"/></svg></span><h3>High-risk loans</h3></header><div class="tp-kpi-v" data-draw="v" data-src="risk_m" data-f="high_loans" data-w="id={rk}|All" data-fmt="num">—</div><p class="tp-kpi-p">High + very high risk segments</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-bad"><svg><use href="#i-briefcase"/></svg></span><h3>High-risk exposure</h3></header><div class="tp-kpi-v" data-draw="v" data-src="risk_m" data-f="high_exposure" data-w="id={rk}|All" data-fmt="bdt">—</div><p class="tp-kpi-p"><span data-draw="v" data-src="risk_m" data-f="high_share" data-w="id={rk}|All" data-fmt="pct">—</span> of outstanding</p></article>
+    </div>
+    <div class="tp-cards">
+      <section class="tp-card" id="c-segs"><h3>Risk segments of today’s book</h3><p class="tp-note">Low &lt; 2%, moderate 2–5%, high 5–10%, very high ≥ 10% predicted 12-month PD.</p>
+        <div data-draw="c_segs" data-source="risk_m"></div></section>
+      <section class="tp-card" id="c-backtest"><h3>Segments back-tested</h3><p class="tp-note">On the out-of-time test loans: average predicted PD against the default rate that actually happened.</p>
+        <div data-draw="c_backtest" data-source="segment_backtest"></div></section>
+      <section class="tp-card" id="c-seg-div"><h3>Exposure by risk segment and division</h3><p class="tp-note">Share of each division’s outstanding principal in each segment; darker is more.</p>
+        <div data-draw="c_segmx" data-dim="Division" data-source="risk_m"></div></section>
+      <section class="tp-card" id="c-seg-occ"><h3>Exposure by risk segment and occupation</h3><p class="tp-note">All divisions.</p>
+        <div data-draw="c_segmx" data-dim="Occupation" data-source="risk_m"></div></section>
+    </div>
+    <h2 class="tp-sec"><svg class="tp-i"><use href="#i-bolt"/></svg>Model 2 · Early-warning system</h2>
+    <p class="tp-lead">Predicts whether a performing loan (0 DPD) will pay its next instalment late or miss it within 30 days, from repayment behaviour so far and recent wallet activity. Trained on month-ends 2023–2025; tested on Jan–Jun 2026.</p>
+    <div class="tp-kpis tp-kpis-4">
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-warn"><svg><use href="#i-flag"/></svg></span><h3>Flagged loans</h3></header><div class="tp-kpi-v" data-draw="v" data-src="risk_m" data-f="ews_loans" data-w="id={rk}|All" data-fmt="num">—</div><p class="tp-kpi-p">Above the alert threshold</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-warn"><svg><use href="#i-wallet"/></svg></span><h3>At-risk outstanding</h3></header><div class="tp-kpi-v" data-draw="v" data-src="risk_m" data-f="ews_exposure" data-w="id={rk}|All" data-fmt="bdt">—</div><p class="tp-kpi-p">Principal on flagged loans</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-spark"/></svg></span><h3>Predicted 30-day delinquency</h3></header><div class="tp-kpi-v" data-draw="v" data-src="model_monitoring" data-f="mean_score" data-w="model=Early warning&amp;population=Current book (Oct 2026)" data-fmt="pct2">—</div><p class="tp-kpi-p">Average across performing open loans</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-scale"/></svg></span><h3>Test delinquency: actual vs predicted</h3></header><div class="tp-kpi-v"><span data-draw="v" data-src="model_metrics" data-f="value" data-w="model=Early warning&amp;metric=test_rate" data-fmt="pct2">—</span> <small>vs <span data-draw="v" data-src="model_metrics" data-f="value" data-w="model=Early warning&amp;metric=test_pred_rate" data-fmt="pct2">—</span></small></div><p class="tp-kpi-p">Jan–Jun 2026 test months</p></article>
+    </div>
+    <div class="tp-cards">
+      <section class="tp-card tp-wide" id="t-watch"><h3>Early-warning watch list</h3><p class="tp-note">The 60 open loans most likely to fall behind in the next 30 days, for the selected division. Loan IDs only; no personal data.</p>
+        <div class="tp-tablebox"><table class="tp-table" data-draw="t_watch" data-source="watchlist" data-row-key="loan_id"></table></div></section>
+    </div>
+    <h2 class="tp-sec"><svg class="tp-i"><use href="#i-check"/></svg>Model performance and monitoring</h2>
+    <div class="tp-cards">
+      <section class="tp-card" id="c-metrics"><h3>Out-of-time performance</h3><p class="tp-note">Alert threshold flags the riskiest 15% of the training population.</p>
+        <div data-draw="c_metrics" data-source="model_metrics"></div></section>
+      <section class="tp-card" id="c-conf"><h3>Confusion matrices</h3><p class="tp-note">Out-of-time test, at the alert threshold.</p>
+        <div data-draw="c_conf" data-source="model_metrics"></div></section>
+      <section class="tp-card" id="c-roc"><h3>ROC curves</h3><p class="tp-note">True positive rate against false positive rate; the dashed diagonal is a random guess.</p>
+        <div class="tp-legend"><span><i style="background:#137C8B"></i>Probability of default</span><span><i style="background:#E3A008"></i>Early warning</span></div>
+        <div class="tp-chart" data-draw="c_curve" data-curve="roc" data-source="model_curves"></div></section>
+      <section class="tp-card" id="c-pr"><h3>Precision–recall curves</h3><p class="tp-note">Precision at each level of recall; rare events make this the stricter view.</p>
+        <div class="tp-legend"><span><i style="background:#137C8B"></i>Probability of default</span><span><i style="background:#E3A008"></i>Early warning</span></div>
+        <div class="tp-chart" data-draw="c_curve" data-curve="pr" data-source="model_curves"></div></section>
+      <section class="tp-card" id="c-cal"><h3>Calibration</h3><p class="tp-note">Average predicted against actual rate in each score decile; points on the dashed line are well calibrated.</p>
+        <div class="tp-legend"><span><i style="background:#137C8B"></i>Probability of default</span><span><i style="background:#E3A008"></i>Early warning</span></div>
+        <div class="tp-chart" data-draw="c_cal" data-source="model_curves"></div></section>
+      <section class="tp-card" id="c-time"><h3>Actual versus predicted over time</h3><p class="tp-note">PD model by disbursement quarter of the test loans: actual 12-month default rate and average prediction.</p>
+        <div class="tp-legend"><span><i style="background:#D64545"></i>Actual</span><span><i style="background:#137C8B"></i>Predicted</span></div>
+        <div class="tp-chart" data-draw="c_avp" data-source="model_performance_time"></div></section>
+      <section class="tp-card" id="c-psi"><h3>Population stability</h3><p class="tp-note">PSI of the score against training deciles: under 0.10 stable, 0.10–0.25 watch, over 0.25 shifted. Also the test AUC per period.</p>
+        <div data-draw="c_psi" data-source="model_monitoring"></div>
+        <div data-draw="c_auct" data-source="model_performance_time"></div></section>
+    </div>
+    <h2 class="tp-sec"><svg class="tp-i"><use href="#i-layers"/></svg>What drives the predictions</h2>
+    <p class="tp-lead">Mean absolute SHAP value on the test set (for these linear models, exact). Gold bars: higher values of the feature raise predicted risk; teal: they lower it; grey: a category. Importance shows what the model relies on — it does not prove that a feature causes default.</p>
+    <div class="tp-cards">
+      <section class="tp-card" id="c-feat-pd"><h3>Probability of default: top features</h3>
+        <div data-draw="c_feat" data-model="PD" data-source="model_features"></div></section>
+      <section class="tp-card" id="c-feat-ews"><h3>Early warning: top features</h3>
+        <div data-draw="c_feat" data-model="Early warning" data-source="model_features"></div></section>
+    </div>
+  </section>
+
+  <!-- ===================== 7. VINTAGE ===================== -->
+  <section class="tp-page" id="vintage" role="tabpanel" hidden>
+    <div class="tp-ph"><h2>Loan vintage &amp; cohort analysis</h2><p>Credit quality of loans by when they were made. A vintage is the quarter or year of disbursement; month on book (MOB) counts months since disbursement; the cumulative default rate is the share of a vintage’s loans that have reached 90+ DPD (or been written off) by that MOB. Cells stay blank until every loan in the vintage has been on book that long, so young and mature vintages are only compared at the same age.</p></div>
+    <div class="tp-cards">
+      <section class="tp-card tp-wide" id="c-vmx"><h3>Vintage default matrix</h3><p class="tp-note">Quarterly vintages × months on book, cumulative default rate by loan count.</p>
+        <div class="tp-scrollx" data-draw="c_vmx" data-source="vin_m"></div></section>
+      <section class="tp-card" id="c-vcurve"><h3>Cumulative default curves by origination year</h3><p class="tp-note">Each line stops at the oldest MOB that every loan of that year has reached.</p>
+        <div class="tp-chart" data-draw="c_vcurve" data-source="vin_m"></div></section>
+      <section class="tp-card" id="c-vyoy"><h3>Origination quality year on year</h3><p class="tp-note">Cumulative default by MOB 3, 6 and 12 for each origination year; missing bars are not yet observable.</p>
+        <div data-draw="c_vyoy" data-source="vin_m"></div></section>
+      <section class="tp-card" id="c-vprod"><h3>Product vintages</h3><p class="tp-note">Cumulative default by MOB 12, product × origination year (all divisions).</p>
+        <div data-draw="c_vgrp" data-type="Product" data-source="vin_m"></div></section>
+      <section class="tp-card" id="c-vnew"><h3>New versus repeat vintages</h3><p class="tp-note">Cumulative default by MOB 12 (all divisions).</p>
+        <div data-draw="c_vgrp" data-type="Borrower type" data-source="vin_m"></div></section>
+      <section class="tp-card" id="c-vnow"><h3>Vintage PAR 30 and PAR 90 today</h3><p class="tp-note">Of each origination year’s loans still open on 31 Oct 2026: share 30+ and 90+ DPD, and outstanding (all divisions).</p>
+        <div data-draw="c_vnow" data-source="vintage_now"></div></section>
+    </div>
+  </section>
+
+  <!-- ===================== 8. PROFITABILITY ===================== -->
+  <section class="tp-page" id="profitability" role="tabpanel" hidden>
+    <div class="tp-ph"><h2>Profitability &amp; risk-adjusted performance</h2><p class="tp-warnline"><svg class="tp-i"><use href="#i-alert"/></svg>Analytical estimates, not accounting profit: income is interest and fees actually received 2021–Oct 2026; cost of funds is a 4.5% annual transfer rate on principal over the tenure; expected credit loss is today’s provision; operating costs are not in the data.</p></div>
+    <div class="tp-kpis">
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-coins"/></svg></span><h3>Interest income</h3></header><div class="tp-kpi-v" data-draw="v" data-src="fin" data-f="interest" data-w="division={div}" data-fmt="bdt">—</div><p class="tp-kpi-p">Interest received</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-doc"/></svg></span><h3>Processing fee income</h3></header><div class="tp-kpi-v" data-draw="v" data-src="fin" data-f="fee" data-w="division={div}" data-fmt="bdt">—</div><p class="tp-kpi-p">Fees at disbursement</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-wallet"/></svg></span><h3>Net interest income</h3></header><div class="tp-kpi-v" data-draw="v" data-src="fin" data-f="nii" data-w="division={div}" data-fmt="bdt">—</div><p class="tp-kpi-p">Interest + fees − cost of funds</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico"><svg><use href="#i-bolt"/></svg></span><h3>Cost of funds</h3></header><div class="tp-kpi-v" data-draw="v" data-src="fin" data-f="cof" data-w="division={div}" data-fmt="bdt">—</div><p class="tp-kpi-p">4.5% a year on principal</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-bad"><svg><use href="#i-shield"/></svg></span><h3>Expected credit loss</h3></header><div class="tp-kpi-v" data-draw="v" data-src="fin" data-f="ecl" data-w="division={div}" data-fmt="bdt">—</div><p class="tp-kpi-p">Provision at 31 Oct 2026</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-warn"><svg><use href="#i-gauge"/></svg></span><h3>Credit cost ratio</h3></header><div class="tp-kpi-v" data-draw="v" data-src="fin" data-f="credit_cost_r" data-w="division={div}" data-fmt="pct2">—</div><p class="tp-kpi-p">(ECL + recovery cost) ÷ disbursed</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-good"><svg><use href="#i-check"/></svg></span><h3>Net contribution</h3></header><div class="tp-kpi-v" data-draw="v" data-src="fin" data-f="contribution" data-w="division={div}" data-fmt="bdt">—</div><p class="tp-kpi-p">NII − ECL − recovery cost</p></article>
+      <article class="tp-kpi"><header><span class="tp-ico tp-ico-good"><svg><use href="#i-target"/></svg></span><h3>Risk-adjusted return</h3></header><div class="tp-kpi-v" data-draw="v" data-src="fin" data-f="rar" data-w="division={div}" data-fmt="pct2">—</div><p class="tp-kpi-p">Net contribution ÷ disbursed</p></article>
+    </div>
+    <div class="tp-cards">
+      <section class="tp-card" id="c-fin-prod"><h3>Income, credit cost and contribution by product</h3><p class="tp-note">Interest and fees received, ECL plus recovery cost, and net contribution.</p>
+        <div data-draw="c_fin" data-dim="Product" data-source="seg_m"></div></section>
+      <section class="tp-card" id="c-fin-div"><h3>Risk-adjusted profitability by division</h3><p class="tp-note">Net contribution and risk-adjusted return per division. Click to filter.</p>
+        <div data-draw="c_findiv" data-source="geo_m"></div></section>
+      <section class="tp-card" id="c-fin-occ"><h3>Contribution by occupation</h3><p class="tp-note">Net contribution and risk-adjusted return.</p>
+        <div data-draw="c_fin" data-dim="Occupation" data-source="seg_m"></div></section>
+      <section class="tp-card" id="c-fin-seg"><h3>Revenue by customer segment</h3><p class="tp-note">Interest and fees received, and yield on disbursed principal.</p>
+        <div data-draw="c_fin" data-dim="Customer segment" data-source="seg_m"></div></section>
+      <section class="tp-card" id="c-inc-npl"><h3>Income versus NPL ratio</h3><p class="tp-note">Income yield (interest + fees ÷ disbursed) against NPL ratio, one bubble per occupation sized by outstanding.</p>
+        <div class="tp-chart tp-tall" data-draw="c_incnpl" data-source="seg_m"></div></section>
+      <section class="tp-card" id="c-yield"><h3>Lending yield versus cost of funds</h3><p class="tp-note">Interest received in the month × 12 ÷ month-end portfolio, against the 4.5% transfer rate (settled months to Jul 2026).</p>
+        <div class="tp-chart" data-draw="c_yield" data-source="mon_m"></div></section>
+    </div>
+  </section>
+
+  <!-- ===================== 9. ACTION CENTRE ===================== -->
+  <section class="tp-page" id="actions" role="tabpanel" hidden>
+    <div class="tp-ph"><h2>Management decision &amp; strategic action centre</h2><p>Findings turned into actions. Every row comes from a rule tested on the selected data; a rule that does not fire shows no row.</p></div>
+    <div class="tp-cards">
+      <section class="tp-card tp-wide" id="t-actions"><h3><svg class="tp-i"><use href="#i-compass"/></svg>Recommendation engine</h3><p class="tp-note">Finding, evidence, relevant KPI with its actual value and benchmark, risk level, proposed action, expected impact and the limit of the evidence.</p>
+        <div class="tp-tablebox tp-tall-box"><table class="tp-table tp-actions" data-draw="t_actions" data-source="actions" data-row-key="id"></table></div></section>
+    </div>
+    <h2 class="tp-sec"><svg class="tp-i"><use href="#i-map"/></svg>A · Geographic strategy</h2>
+    <div class="tp-quads">
+      <div class="tp-q tp-q-good"><h4><svg class="tp-i"><use href="#i-target"/></svg>High growth, low risk</h4><ul data-draw="q_geo" data-source="geo_m" data-q="High growth / Low risk"></ul></div>
+      <div class="tp-q tp-q-bad"><h4><svg class="tp-i"><use href="#i-alert"/></svg>High growth, high risk</h4><ul data-draw="q_geo" data-source="geo_m" data-q="High growth / High risk"></ul></div>
+      <div class="tp-q"><h4><svg class="tp-i"><use href="#i-check"/></svg>Low growth, low risk — underpenetrated?</h4><ul data-draw="q_geo" data-source="geo_m" data-q="Low growth / Low risk"></ul></div>
+      <div class="tp-q tp-q-warn"><h4><svg class="tp-i"><use href="#i-flag"/></svg>Low growth, high risk</h4><ul data-draw="q_geo" data-source="geo_m" data-q="Low growth / High risk"></ul></div>
+    </div>
+    <div class="tp-cards">
+      <section class="tp-card" id="c-ce-chg"><h3>Collection efficiency change by division</h3><p class="tp-note">12 months to Jul 2026 against the 12 before; red bars deteriorated.</p>
+        <div data-draw="c_cechg" data-source="kpi"></div></section>
+      <section class="tp-card" id="c-npl-dist"><h3>Highest-NPL districts</h3><p class="tp-note">Districts with at least ৳1M outstanding in the selected scope.</p>
+        <div data-draw="c_npldist" data-source="geo_m"></div></section>
+    </div>
+    <h2 class="tp-sec"><svg class="tp-i"><use href="#i-users"/></svg>B · Customer segmentation strategy</h2>
+    <div class="tp-quads">
+      <div class="tp-q tp-q-good"><h4><svg class="tp-i"><use href="#i-target"/></svg>High value, low risk</h4><ul data-draw="q_val" data-source="seg_m" data-q="hl"></ul></div>
+      <div class="tp-q tp-q-bad"><h4><svg class="tp-i"><use href="#i-alert"/></svg>High value, high risk</h4><ul data-draw="q_val" data-source="seg_m" data-q="hh"></ul></div>
+      <div class="tp-q"><h4><svg class="tp-i"><use href="#i-repeat"/></svg>Reliable repeat borrowers</h4><ul data-draw="q_val" data-source="seg_m" data-q="rep"></ul></div>
+      <div class="tp-q tp-q-warn"><h4><svg class="tp-i"><use href="#i-flag"/></svg>Needs further credit assessment</h4><ul data-draw="q_val" data-source="seg_m" data-q="assess"></ul></div>
+    </div>
+    <p class="tp-lead">Value is outstanding share at or above the median occupation; risk is a 12-month default rate above the portfolio rate. Reliable repeat: repeat share above the portfolio and default below it. Further assessment: default above 1.25× the portfolio rate.</p>
+    <h2 class="tp-sec"><svg class="tp-i"><use href="#i-scale"/></svg>C · Credit policy evidence</h2>
+    <div class="tp-cards">
+      <section class="tp-card" id="c-pol-dti"><h3>Income-to-loan relationship</h3><p class="tp-note">12-month default by debt-to-income band.</p><div data-draw="c_bands" data-dim="Debt-to-income" data-source="bands"></div></section>
+      <section class="tp-card" id="c-pol-ten"><h3>Loan-tenure risk</h3><p class="tp-note">12-month default by tenure.</p><div data-draw="c_band" data-dim="Loan tenure" data-source="seg_m"></div></section>
+      <section class="tp-card" id="c-pol-prod"><h3>Product-specific risk</h3><p class="tp-note">12-month default and risk-adjusted return by product.</p><div data-draw="c_band" data-dim="Product" data-source="seg_m"></div></section>
+      <section class="tp-card" id="c-pol-lim"><h3>Loan-limit adequacy</h3><p class="tp-note">Default and return by loan size band.</p><div data-draw="c_band" data-dim="Loan amount band" data-source="seg_m"></div></section>
+    </div>
+    <h2 class="tp-sec"><svg class="tp-i"><use href="#i-repeat"/></svg>D · Collection priorities</h2>
+    <div class="tp-cards">
+      <section class="tp-card" id="c-prio"><h3>Accounts approaching 7 and 30 DPD</h3><p class="tp-note">Open loans and outstanding in the early buckets, plus loans the early-warning model flags.</p>
+        <div data-draw="c_prio" data-source="ageing"></div>
+        <p class="tp-kpi-p">Early-warning flags: <b data-draw="v" data-src="risk_m" data-f="ews_loans" data-w="id={rk}|All" data-fmt="num">—</b> loans, <b data-draw="v" data-src="risk_m" data-f="ews_exposure" data-w="id={rk}|All" data-fmt="bdt">—</b> outstanding.</p></section>
+      <section class="tp-card" id="t-prio"><h3>Highest-exposure flagged loans</h3><p class="tp-note">Top of the early-warning list by outstanding; repeated late instalments shown.</p>
+        <div class="tp-tablebox"><table class="tp-table" data-draw="t_prio" data-source="watchlist" data-row-key="loan_id"></table></div></section>
+    </div>
+  </section>
+
+  <!-- ===================== 10. METHOD ===================== -->
+  <section class="tp-page" id="method" role="tabpanel" hidden>
+    <div class="tp-ph"><h2>Methodology, definitions &amp; validation</h2><p>How every figure is built, the assumptions behind it, and checks against the source tables.</p></div>
+    <div class="tp-cards">
+      <section class="tp-card tp-wide" id="t-val"><h3><svg class="tp-i"><use href="#i-check"/></svg>Data validation</h3><p class="tp-note">Reconciliations run on the source Parquet tables when the datasets were built. “Explained” rows differ by design; see the rule.</p>
+        <div class="tp-tablebox"><table class="tp-table" data-draw="t_val" data-source="validation" data-row-key="check"></table></div></section>
+      <section class="tp-card tp-wide" id="defs"><h3><svg class="tp-i"><use href="#i-book"/></svg>KPI definitions</h3>
+        <div class="tp-tablebox"><table class="tp-table tp-static">
+          <thead><tr><th>Measure</th><th>Definition</th><th>Grain and date</th></tr></thead>
+          <tbody>
+            <tr><td>Total disbursement</td><td>Sum of principal disbursed</td><td>Loan; disbursement date</td></tr>
+            <tr><td>Gross loan portfolio (GLP)</td><td>Principal less principal repaid, on loans open at month-end; written-off loans leave the book at the end of their last delinquency window</td><td>Loan; month-end snapshot rebuilt from instalments</td></tr>
+            <tr><td>Days past due</td><td>Largest age of any instalment due and not settled at month-end; a missed instalment holds its recorded DPD while the loan stays open</td><td>Loan; month-end</td></tr>
+            <tr><td>PAR X</td><td>Whole outstanding principal of loans with DPD ≥ X ÷ GLP</td><td>Loan; month-end</td></tr>
+            <tr><td>Gross NPL ratio</td><td>PAR 90: principal of loans 90+ DPD ÷ GLP</td><td>Loan; month-end</td></tr>
+            <tr><td>Expected credit loss</td><td>PD × LGD × outstanding. Stage 1 (&lt; 30 DPD): origination PD, LGD 65%. Stage 2 (30–89 DPD or rescheduled): min(95%, 1.85 × PD), LGD 65%. Stage 3 (90+): 100%, LGD 80%</td><td>Loan; month-end</td></tr>
+            <tr><td>Collection efficiency</td><td>Total paid ÷ total scheduled on instalments due in the period</td><td>Instalment; due date, settled months only</td></tr>
+            <tr><td>On-time / late / missed rate</td><td>Instalments paid on time / paid late, rescheduled or partly paid past due / missed, overdue or waived ÷ instalments due</td><td>Instalment; due date</td></tr>
+            <tr><td>12-month default rate</td><td>Loans reaching 90+ DPD or written off within 365 days of disbursement ÷ loans disbursed, for loans made by 31 Oct 2025</td><td>Loan; disbursement date</td></tr>
+            <tr><td>Recovery rate</td><td>Amount collected ÷ outstanding balance before each collection action</td><td>Collection action; collection date</td></tr>
+            <tr><td>Roll rate / cure rate</td><td>Share of a bucket’s principal in a worse bucket or written off / back to current or repaid one month later</td><td>Loan; consecutive month-ends</td></tr>
+            <tr><td>Active borrowers</td><td>Distinct customers with an open loan</td><td>Customer; month-end</td></tr>
+            <tr><td>Repeat borrower rate</td><td>Loans flagged as a customer’s second or later loan ÷ loans</td><td>Loan</td></tr>
+            <tr><td>Interest / fee income</td><td>Interest actually paid on instalments; processing fees at disbursement</td><td>Instalment; payment date / loan</td></tr>
+            <tr><td>Cost of funds</td><td>Principal × 4.5% × tenure ÷ 12 (documented treasury transfer rate)</td><td>Loan</td></tr>
+            <tr><td>Net contribution / risk-adjusted return</td><td>Interest + fees − cost of funds − ECL − recovery cost; ÷ disbursed</td><td>Loan; analytical estimate</td></tr>
+            <tr><td>Disbursement growth (geography)</td><td>Disbursed Nov 2025–Oct 2026 ÷ Nov 2024–Oct 2025 − 1</td><td>Loan; disbursement date</td></tr>
+          </tbody></table></div></section>
+      <section class="tp-card" id="notes"><h3><svg class="tp-i"><use href="#i-alert"/></svg>Data notes and assumptions</h3>
+        <ul class="tp-list">
+          <li>Instalments due after 31 Jul 2026 carry a placeholder 15% partial payment in the source, so collection measures stop at July 2026 and delinquency on those instalments is not yet visible.</li>
+          <li>The documented benchmark GLP (৳1,239.9M) includes ৳60.5M on written-off loans; this dashboard excludes written-off principal, as the definition in the metric guide states.</li>
+          <li>The documented PAR uses each loan’s worst-ever DPD; this dashboard uses DPD at month-end so history can be trended.</li>
+          <li>Geography is the borrower’s registered location. Penetration uses registered customers as the denominator.</li>
+          <li>Division boundaries come from geoBoundaries (gbOpen, BGD ADM1, simplified); they are for display, not survey accuracy.</li>
+          <li>All customer, loan and agent records are synthetic; loan IDs are shown without personal data.</li>
+        </ul></section>
+      <section class="tp-card" id="model-method"><h3><svg class="tp-i"><use href="#i-spark"/></svg>Predictive model methodology</h3>
+        <ul class="tp-list">
+          <li>Both models are L2-regularised logistic regressions fitted by Newton’s method in Python (numpy), on standardised numeric features and one-hot categories.</li>
+          <li>PD features at origination: loan amount, tenure, rate, product, purpose, loan cycle, credit score, age, income, debt-to-income, loan-to-income, existing balance, account tenure, earlier late and missed instalments and worst DPD (only instalments due before disbursement), historical on-time ratio, wallet balance, transaction count and savings activity from the latest monthly snapshot, occupation, division, urban/rural, education, gender, KYC and channel.</li>
+          <li>Early-warning features at each month-end: months on book, share repaid, late and partial instalments on the loan so far, earlier repayment history, current wallet activity and the origination features above.</li>
+          <li>Validation is out of time: every test record is later than every training record. Risk thresholds: PD segments at 2%, 5% and 10%; alert threshold at the training population’s 85th percentile.</li>
+          <li>SHAP values for a linear model are coefficient × (value − mean); importance is their mean absolute size. They describe the model, not cause and effect.</li>
+        </ul></section>
+    </div>
+  </section>
+
+  <footer class="tp-foot"><span class="tp-mark tp-mark-s" role="img" aria-label="TakaPay"></span><span>TakaPay · Digital lending &amp; credit risk intelligence · Synthetic data for analysis · Boundaries © geoBoundaries (CC BY 4.0)</span></footer>
+</div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="js/runtime.js"></script>
+<script src="js/core.js"></script>
+<script src="js/calcs.js"></script>
+<script src="js/pages.js"></script>
+<script src="js/pages2.js"></script>
+<script src="js/story.js"></script>
+</body>
+</html>

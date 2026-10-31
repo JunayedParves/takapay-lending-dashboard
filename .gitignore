@@ -1,0 +1,6 @@
+# raw source tables and pipeline intermediates
+raw/
+*.parquet
+*.pkl
+__pycache__/
+.DS_Store

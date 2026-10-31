@@ -1,0 +1,1 @@
+[{"segment":"High risk","loans":11539,"predicted":0.067938,"actual":0.06673},{"segment":"Low risk","loans":20438,"predicted":0.013762,"actual":0.013749},{"segment":"Moderate risk","loans":31013,"predicted":0.032061,"actual":0.029697},{"segment":"Very high risk","loans":2570,"predicted":0.133208,"actual":0.109728}]

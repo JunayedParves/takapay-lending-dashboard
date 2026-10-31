@@ -1,0 +1,45 @@
+/* Story tab */
+.st-hero { padding: clamp(20px, 4vw, 44px); border-radius: var(--cds-radius); background: linear-gradient(135deg, color-mix(in srgb, var(--tp-teal) 16%, var(--color-panel)), var(--color-panel) 65%); border: 1px solid var(--color-border-line); }
+.st-kicker { margin: 0 0 10px; display: flex; gap: 8px; align-items: center; color: var(--tp-teal); font-size: var(--cds-font-size-caption); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.st-kicker .tp-i { color: var(--tp-gold); }
+.st-h { margin: 0; max-width: 52rem; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(1.6rem, 3.4vw, 2.6rem); line-height: 1.18; }
+.st-h b { color: var(--tp-teal); font-weight: 600; }
+.st-lede { max-width: 46rem; margin: 14px 0 0; color: var(--color-fg-muted); font-size: 1.05rem; }
+.st-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: var(--cds-gap-md); margin-top: 26px; }
+.st-stats > div { border-left: 3px solid var(--tp-gold); padding-left: 12px; }
+.st-n { display: block; font-family: var(--font-anthropic-serif); font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.1; }
+.st-l { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.st-toc { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 26px; }
+.st-toc a { font-size: var(--cds-font-size-caption); color: var(--color-fg); text-decoration: none; padding: 4px 11px; border: 1px solid var(--color-border-line); border-radius: 999px; background: var(--color-panel); }
+.st-toc a:hover { border-color: var(--tp-teal); color: var(--tp-teal); }
+
+.st-ch { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(16px, 3vw, 40px); align-items: center; padding: clamp(28px, 5vw, 56px) 0; border-bottom: 1px solid var(--color-border-line); scroll-margin-top: 12px; }
+.st-ch-last { align-items: start; border-bottom: 0; }
+.st-num { margin: 0 0 6px; color: var(--tp-gold); font-weight: 700; font-size: var(--cds-font-size-caption); letter-spacing: .06em; text-transform: uppercase; }
+.st-text h3 { margin: 0 0 10px; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(1.35rem, 2.4vw, 1.8rem); line-height: 1.2; }
+.st-text p { margin: 0 0 10px; }
+.st-text b { color: var(--tp-teal); }
+.st-so { padding: 10px 12px; border-left: 3px solid var(--tp-gold); background: color-mix(in srgb, var(--tp-gold) 9%, transparent); border-radius: 0 var(--cds-radius) var(--cds-radius) 0; font-size: var(--cds-font-size-caption); }
+.st-go { margin-top: 6px; }
+.st-fig { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; }
+.st-cap { margin: 0 0 8px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-weight: 600; }
+.st-actions { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--cds-gap-md); min-height: 6rem; }
+.st-act { background: var(--color-panel); border: 1px solid var(--color-border-line); border-left: 4px solid var(--tp-teal); border-radius: var(--cds-radius); padding: var(--cds-pad-md) var(--cds-pad-lg); }
+.st-act-high { border-left-color: var(--tp-bad); }
+.st-act-medium { border-left-color: var(--tp-warn); }
+.st-act-low { border-left-color: var(--tp-good); }
+.st-act-h { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
+.st-act-area { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.st-act-f { margin: 0 0 4px; font-weight: 600; }
+.st-act-a { margin: 0 0 4px; }
+.st-act-e { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.st-foot { display: flex; gap: 8px; align-items: center; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.tp-theme { margin-left: 2px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .st-ch { opacity: 0; transform: translateY(18px); transition: opacity var(--cds-dur-slow) var(--cds-ease-out), transform var(--cds-dur-slow) var(--cds-ease-out); }
+  .st-ch.is-in { opacity: 1; transform: none; }
+}
+@media (max-width: 860px) {
+  .st-ch { grid-template-columns: 1fr; }
+}
